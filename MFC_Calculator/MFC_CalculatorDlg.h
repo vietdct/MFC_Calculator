@@ -39,6 +39,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CString m_strDisplay;
+	CString m_strExpression;
+	CString m_strInputBuffer;
+	CString m_strExprPrefix;
 	afx_msg void OnBnClickedBtnNum1();
 	afx_msg void OnBnClickedBtnNum2();
 	afx_msg void OnBnClickedBtnNum3();
@@ -80,6 +83,7 @@ public:
 	}
 
 private:
+
 	std::shared_ptr<ICalState> m_currentState;
 	std::shared_ptr<ICalState> m_normalState;
 	std::shared_ptr<ICalState> m_operatorPendingState;

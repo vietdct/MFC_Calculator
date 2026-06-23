@@ -21,6 +21,7 @@
 
 class CAboutDlg : public CDialogEx
 {
+
 public:
 	CAboutDlg();
 
@@ -64,8 +65,11 @@ CMFCCalculatorDlg::CMFCCalculatorDlg(CWnd* pParent /*=nullptr*/)
 }
 
 void CMFCCalculatorDlg::ClearAll() {
-	m_strDisplay = _T("0");
+	m_strDisplay = _T("");
 	m_firstOperand = 0.0;
+	m_strExpression = _T("");
+	m_strExprPrefix = _T("");
+	m_strInputBuffer = _T("");
 	m_operator = _T('0');
 	SetState(GetNormalState());
 	UpdateData(FALSE);
@@ -73,10 +77,13 @@ void CMFCCalculatorDlg::ClearAll() {
 
 void CMFCCalculatorDlg::CalculateResult() {
 	UpdateData(TRUE); //lay du lieu tu UI vao bien
-	double secondOperand = _ttof(m_strDisplay); // Lấy số thứ hai từ display)
+	if (m_pCurrentStrategy == nullptr) { return; }
+	double secondOperand = _ttof(m_strInputBuffer); // Lấy số thứ hai từ display)
 	double result = 0.0;
+	m_strExpression = m_strExprPrefix + m_strInputBuffer + _T(" = ");
 	result = m_pCurrentStrategy->Calculator(m_firstOperand, secondOperand);
 	delete m_pCurrentStrategy; 
+	m_pCurrentStrategy = nullptr;
 
 	if (result == static_cast<long long> (result)) {
 		m_strDisplay.Format(_T("%lld"), static_cast<long long>(result));
@@ -113,8 +120,9 @@ void CMFCCalculatorDlg::Appendigit(TCHAR digit)
 }
 void CMFCCalculatorDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialogEx::DoDataExchange(pDX);	
 	DDX_Text(pDX, IDC_EDIT_DISPLAY, m_strDisplay);
+	DDX_Text(pDX, IDC_STATIC_EXPRESSION, m_strExpression);
 
 
 }
