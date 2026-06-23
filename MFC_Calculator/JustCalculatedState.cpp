@@ -15,5 +15,6 @@ void JustCalculatedState::SetOperator(CMFCCalculatorDlg* dlg, TCHAR op) {
 	dlg->m_strExprPrefix = dlg->m_strDisplay + _T(" ") + op + _T(" ");
 	dlg->m_strExpression = dlg->m_strExprPrefix;
 	dlg->m_strInputBuffer = _T("");
+	dlg->m_strDisplay = _T("");
 	dlg->SetState(dlg->GetOperatorPendingState());
 }
